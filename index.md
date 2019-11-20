@@ -127,13 +127,17 @@ sequenceDiagram
 
 {% include alert.html body='This is a standard alert.' %}
 
+{% include alert.html type='default'
+                      icon='info'
+                      body='This is a low-key informational alert.' %}
+
 {% include alert.html type='success'
                       icon='check_circle'
                       body='This is a successful alert.' %}
 
 {% include alert.html icon='info_outline'
                       header='**Informational** *alert*'
-                      body='This is an **informational** alert *with* `<markdown/>`{:.language-html}.' %}
+                      body='This is an important **informational** alert *with* `<markdown/>`{:.language-html}.' %}
 
 {% include alert.html type='warning'
                       icon='warning'
