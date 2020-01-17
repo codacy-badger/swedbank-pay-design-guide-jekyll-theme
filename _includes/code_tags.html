@@ -1,0 +1,7 @@
+{% assign type = include.type | default: 'primary' %}
+{% assign type_class = 'code-tags-' | append: type %}
+{% assign code = include.code | strip %}
+
+<span class="code-tags {{ type_class }}">
+    {{ code }}
+</span>

@@ -186,8 +186,7 @@ and try out PayEx Checkout for yourself!' %}
 
 ![Branching](https://guides.github.com/activities/hello-world/branching.png)
 
-
-## Definition lists can be used with HTML syntax.
+## Definition lists can be used with HTML syntax
 
 <dl>
     <dt>Name</dt>
@@ -211,3 +210,10 @@ The final element.
 ## Emoji support
 
 :+1: :heavy_check_mark: :fire: 💡 :unicorn:
+
+## Code tags
+
+{% include code_tags.html type="primary"
+                          code="code_tags_primary()" %}
+{% include code_tags.html type="secondary"
+                          code="code_tags_secondary()" %}
