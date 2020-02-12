@@ -2,6 +2,9 @@ repository: SwedbankPay/swedbank-pay-design-guide-jekyll-theme
 plugins:
   - "jekyll-github-metadata"
   - jemoji
+liquid:
+  strict_variables: true
+  error_mode: "strict"
 # To include node_modules and other folders that are excluded by default:
 # exclude: []
 tipue_search:
