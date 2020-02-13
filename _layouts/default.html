@@ -1,25 +1,41 @@
-{%
+{% assign title = page.title | default: "PayEx Design Guide theme for Jekyll" %}
 
-    assign title = page.title | default: "PayEx Design Guide theme for Jekyll" %}{%
-    assign description = page.opengraph.description | default: site.opengraph.description %}{%
-    assign image = page.opengraph.image | default: site.opengraph.image %}{%
-    assign github_branch = site.github.branch | default : "develop" %}{%
-    assign design_guide_base_url = design_guide_version_url | default: 'https://design.swedbankpay.com' %}{%
-    assign design_guide_version = site.design_guide.version | default: '4.1.0' %}{%
-    assign design_guide_version_url = design_guide_base_url | append: '/v/' | append: design_guide_version
+{% assign opengraph = page.opengraph | default: empty %}
+{% if opengraph == empty %}
+    {% assign opengraph = site.opengraph | default: empty %}
+{% endif %}
+{% if opengraph != empty %}
+    {% assign description = opengraph.description | default: nil %}
+    {% assign image = opengraph.image| default: nil %}
+{% endif %}
 
-%}
+{% if site.design_guide != nil %}
+    {% assign design_guide_base_url = site.design_guide.base_url | default: 'https://design.swedbankpay.com' %}
+    {% assign design_guide_version = site.design_guide.version | default: '4.1.0' %}
+{% else %}
+    {% assign design_guide_base_url = 'https://design.swedbankpay.com' %}
+    {% assign design_guide_version = '4.1.0' %}
+{% endif %}
+
+{% assign design_guide_version_url = design_guide_base_url | append: '/v/' | append: design_guide_version %}
+
+{% assign github = site.github | default: false %}
+{% if github != false %}
+    {% assign github_branch = github.branch | default : "develop" %}
+{% else %}
+    {% assign github_branch = "develop"%}
+{% endif %}
 
 {% if page.sidebar.navigation == nil %}
-{% unless page.name contains "index"  %}
+    {% unless page.name contains "index"  %}
 
-{% assign dirname = page.dir | split: "/" | last | remove: "/" | capitalize %}
+    {% assign dirname = page.dir | split: "/" | last | remove: "/" | capitalize %}
 
-{% unless dirname == "" %}
-{% assign title = dirname | append: " – " | append: title %}
-{% endunless %}
+    {% unless dirname == "" %}
+        {% assign title = dirname | append: " – " | append: title %}
+    {% endunless %}
 
-{% endunless %}
+    {% endunless %}
 {% endif %}
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
@@ -150,8 +166,8 @@
 
                         <div class="topbar-info topbar-link-right">
                             <div class="topbar-info-contact">
-                                <a href="{{ site.github.repository_url }}/tree/{{github_branch}}/{{ page.path }}" target="_blank"
-                                    rel="noopener noreferrer" title="Edit this page on GitHub">
+                                <a href="{{ site.github.repository_url }}/tree/{{github_branch}}/{{ page.path }}"
+                                    target="_blank" rel="noopener noreferrer" title="Edit this page on GitHub">
                                     <svg aria-labelledby="simpleicons-github-icon" role="img" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <title id="simpleicons-github-icon">Edit this page on GitHub</title>

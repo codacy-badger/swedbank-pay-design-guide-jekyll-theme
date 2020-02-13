@@ -4,15 +4,14 @@ plugins:
   - jemoji
 liquid:
   strict_variables: true
-  error_mode: "strict"
 # To include node_modules and other folders that are excluded by default:
 # exclude: []
 tipue_search:
   include:
     pages: true
-opengraph:
-  description: Swedbank Pay Design Guide theme for Jekyll
-  image: /image1.png
+#opengraph:
+#  description: Swedbank Pay Design Guide theme for Jekyll
+#  image: /image1.png
 design_guide:
   base_url: https://design.swedbankpay.com
   version: 4.3.0
