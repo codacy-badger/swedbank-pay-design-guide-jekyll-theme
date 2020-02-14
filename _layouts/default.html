@@ -1,12 +1,26 @@
 {% assign title = page.title | default: "PayEx Design Guide theme for Jekyll" %}
+{% assign has_page_opengraph = page | has_key: 'opengraph' %}
+{% assign has_site_opengraph = site | has_key: 'opengraph' %}
 
-{% assign opengraph = page.opengraph | default: empty %}
-{% if opengraph == empty %}
-    {% assign opengraph = site.opengraph | default: empty %}
+{% if has_page_opengraph == true and page.opengraph != empty %}
+    {% assign opengraph = page.opengraph %}
+{% elsif has_site_opengraph == true and site.opengraph != empty %}
+    {% assign opengraph = site.opengraph %}
+{% else %}
+    {% assign opengraph = empty %}
 {% endif %}
+
 {% if opengraph != empty %}
-    {% assign description = opengraph.description | default: nil %}
-    {% assign image = opengraph.image| default: nil %}
+    {% assign has_opengraph_description = opengraph | has_key: 'description' %}
+    {% assign has_opengraph_image = opengraph | has_key: 'image' %}
+
+    {% if has_opengraph_description and opengraph.description != empty %}
+        {% assign description = opengraph.description %}
+    {% endif %}
+
+    {% if has_opengraph_image and opengraph.image != empty %}
+        {% assign image = opengraph.image | default: nil %}
+    {% endif %}
 {% endif %}
 
 {% if site.design_guide != nil %}
@@ -18,24 +32,32 @@
 {% endif %}
 
 {% assign design_guide_version_url = design_guide_base_url | append: '/v/' | append: design_guide_version %}
-
-{% assign github = site.github | default: false %}
-{% if github != false %}
-    {% assign github_branch = github.branch | default : "develop" %}
+{% assign has_site_github = site | has_key: 'github' %}
+{% if has_site_github == true and site.github != empty %}
+    {% assign has_github_branch = github | has_key: 'branch' %}
+    {% if has_github_branch == true and site.github.branch != empty %}
+        {% assign github_branch = site.github.branch %}
+    {% else %}
+        {% assign github_branch = "develop" %}
+    {% endif %}
 {% else %}
-    {% assign github_branch = "develop"%}
+    {% assign github_branch = "develop" %}
 {% endif %}
 
-{% if page.sidebar.navigation == nil %}
+{% assign has_page_sidebar = page | has_key: 'sidebar' %}
+{% if has_page_sidebar == true and page.sidebar != empty %}
+    {% assign has_sidebar_navigation = page.sidebar | has_key: 'navigation' %}
+    {% if has_sidebar_navigation == true and page.sidebar.navigation != empty %}
+    {% endif %}
+{% else %}
     {% unless page.name contains "index"  %}
-
-    {% assign dirname = page.dir | split: "/" | last | remove: "/" | capitalize %}
-
-    {% unless dirname == "" %}
-        {% assign title = dirname | append: " – " | append: title %}
+        {% assign dirname = page.dir | split: "/" | last | remove: "/" | capitalize %}
+        {% unless dirname == "" %}
+            {% assign title = dirname | append: " – " | append: title %}
+        {% endunless %}
     {% endunless %}
-
-    {% endunless %}
+{% endif %}
+{% if page.sidebar.navigation == nil %}
 {% endif %}
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
