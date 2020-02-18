@@ -16,14 +16,22 @@
 
     {% if has_opengraph_description and opengraph.description != empty %}
         {% assign description = opengraph.description %}
+    {% else %}
+        {% assign description = nil %}
     {% endif %}
 
     {% if has_opengraph_image and opengraph.image != empty %}
         {% assign image = opengraph.image | default: nil %}
+    {% else %}
+        {% assign image = nil %}
     {% endif %}
+{% else %}
+    {% assign description = nil %}
+    {% assign image = nil %}
 {% endif %}
 
-{% if site.design_guide != nil %}
+{% assign has_site_design_guide = site | has_key: 'design_guide' %}
+{% if has_site_design_guide == true and site.design_guide != empty %}
     {% assign design_guide_base_url = site.design_guide.base_url | default: 'https://design.swedbankpay.com' %}
     {% assign design_guide_version = site.design_guide.version | default: '4.1.0' %}
 {% else %}
@@ -50,6 +58,7 @@
     {% if has_sidebar_navigation == true and page.sidebar.navigation != empty %}
     {% endif %}
 {% else %}
+    {% assign has_sidebar_navigation = false %}
     {% unless page.name contains "index"  %}
         {% assign dirname = page.dir | split: "/" | last | remove: "/" | capitalize %}
         {% unless dirname == "" %}
@@ -57,11 +66,36 @@
         {% endunless %}
     {% endunless %}
 {% endif %}
-{% if page.sidebar.navigation == nil %}
+
+{% assign has_site_lang = site | has_key: 'lang' %}
+{% if has_site_lang == true and site.lang != empty %}
+    {% assign lang = site.lang %}
+{% else %}
+    {% assign lang = 'en-US' %}
+{% endif %}
+
+{% assign has_page_url = page | has_key: 'url' %}
+{% if has_page_url == true and page.url != empty %}
+    {% assign page_url = page.url %}
+{% else %}
+    {% assign page_url = nil %}
+{% endif %}
+
+{% assign has_site_url = site | has_key: 'url' %}
+{% if has_site_url == true and site.url != empty %}
+    {% assign site_url = site.url %}
+{% else %}
+    {% assign site_url = nil %}
+{% endif %}
+
+{% assign has_page_type = page | has_key: 'type' %}
+{% if has_page_type == true and page.type != empty %}
+    {% assign page_type = page.type %}
+{% else %}
+    {% assign page_type = nil %}
 {% endif %}
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: "en-US" }}">
-
+<html lang="{{ lang }}">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -76,7 +110,7 @@
         <meta name="msapplication-TileImage" content="{{ design_guide_version_url }}/icons/mstile-144x144.png">
         <meta property="og:type" value="website" />
         {% if page.url != nil %}
-        <meta property="og:url" value="{{ page.url | absolute_url }}" />{% endif %}
+        <meta property="og:url" value="{{ page_url | absolute_url }}" />{% endif %}
         <meta property="og:title" value="{{ title }}" />
         <meta name="title" content="{{ title }}" />
         {% if description != nil %}
@@ -157,14 +191,14 @@
         <div id="designguide">
             <header class="topbar topbar-md-wide designguide-header">
                 <button type="button" class="topbar-btn"><i class="material-icons topbar-btn-icon">menu</i></button>
-                <a href="{{ site.url }}" class="topbar-logo"><img
+                <a href="{{ site_url }}" class="topbar-logo"><img
                         src="{{ design_guide_version_url }}/img/swedbankpay-logo.svg" alt="logo"></a>
                 <nav class="topbar-nav">
                     <div class="topbar-link-container">
                         <button type="button" class="topbar-close"><i class="material-icons">close</i></button>
 
                         {% assign site_url = "/" | relative_url %}
-                        {% assign page_url = page.url | remove: '.html' %}
+                        {% assign page_url = page_url | remove: '.html' %}
 
                         {% comment %}
                         TODO: Enumerate pages through site.pages instead of hard coded in _config.yml.
@@ -214,7 +248,7 @@
                                     title="At least 3 characters">
                             </form>
                             {% endif %}
-                            {% if page.sidebar.navigation != nil %}
+                            {% if has_sidebar_navigation %}
                             <nav class="documentation-nav">
                                 {% for group in page.sidebar.navigation %}
                                 {% comment %}
@@ -240,7 +274,7 @@
                                 {% endfor %}
                             </nav>
                             {% else %}
-                            {% include sidebar.html %}
+                                {% include sidebar.html %}
                             {% endif %}
                         </div>
                     </div>
@@ -250,10 +284,10 @@
                             <h1>{{ title }}</h1>
                             <div class="row">
                                 <div class="doc-body col-lg-10">
-                                    {% if page.type == 'search' %}
-                                    <div id="tipue_search_content"></div>
+                                    {% if page_type == 'search' %}
+                                        <div id="tipue_search_content"></div>
                                     {% else %}
-                                    {% include anchor_headings.html html=content anchorClass='header-anchor' %}
+                                        {% include anchor_headings.html html=content anchorClass='header-anchor' %}
                                     {% endif %}
                                 </div>
 
