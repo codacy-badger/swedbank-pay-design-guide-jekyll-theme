@@ -2,6 +2,8 @@
 {% assign has_page_opengraph = page | has_key: 'opengraph' %}
 {% assign has_site_opengraph = site | has_key: 'opengraph' %}
 
+{% assign opengraph = page | get_key: 'opengraph' | site | get_key : 'opengraph' | default: nil %}
+
 {% if has_page_opengraph == true and page.opengraph != empty %}
     {% assign opengraph = page.opengraph %}
 {% elsif has_site_opengraph == true and site.opengraph != empty %}
