@@ -1,0 +1,26 @@
+{
+  "name": "swedbank-pay-design-guide-jekyll-theme",
+  "version": "1.0.0",
+  "description": "Swedbank Pay Design Guide Theme for Jekyll",
+  "main": ".github/build_actions/pre_render.js",
+  "dependencies": {
+    "jsdom": "^16.0.1",
+    "mermaid.cli": "^0.5.1",
+    "unescape": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "mmdc": "mmdc",
+    "start": "node .github/build_actions/pre_render.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SwedbankPay/developer.swedbankpay.com.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SwedbankPay/developer.swedbankpay.com/issues"
+  },
+  "homepage": "https://github.com/SwedbankPay/developer.swedbankpay.com#readme"
+}
