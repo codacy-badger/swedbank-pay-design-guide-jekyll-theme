@@ -1,15 +1,10 @@
 const siteFolder = './_site/';
 const fs = require('fs');
 const path = require('path');
-const decode = require('unescape');
 const jsdom = require("jsdom");
 const {
   JSDOM
 } = jsdom;
-const {
-  exec,
-  execSync
-} = require("child_process");
 
 const getAllFiles = function (dirPath, arrayOfFiles) {
   files = fs.readdirSync(dirPath);
@@ -34,8 +29,6 @@ const renderFileAndRemoveMermaidScript = function (filename) {
     runScripts: "dangerously",
     url: "file://" + resolvedPath
   };
-
-  let filenameWithoutSite = filename.substring("_site\\".length);
 
   JSDOM.fromFile(`${filename}`, options).then(dom => {
     let result = dom.serialize();
