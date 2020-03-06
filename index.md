@@ -104,7 +104,7 @@ sequenceDiagram
         Merchant->>SwedbankPay: GET <payment instrument> payment
         note left of Merchant: First API request
         activate SwedbankPay
-            SwedbankPay-->>Merchant: payment resource
+            SwedbankPay->>Merchant: payment resource
         deactivate SwedbankPay
     deactivate Merchant
 ```
@@ -215,3 +215,27 @@ The final element.
 
 {% icon check %} {% icon line_weight %} {% icon gavel %} {% icon visibility %}
 {% icon work %}
+
+## Mermaid.js support
+
+```mermaid
+sequenceDiagram
+    participant ActorA as Unarmed user
+    participant ActorB as Armed person
+    participant ActorC as Police
+
+    activate ActorB
+    ActorB -> ActorA: Sees person
+    ActorB -> ActorA: Decides to rob person
+    ActorA -> ActorB: Surrenders valuables
+    ActorB -> ActorA: Leaves person alone
+    deactivate ActorB
+    ActorA -> ActorC: Calls police
+    activate ActorC
+    ActorC -> ActorB: Rushes to capture
+    ActorB -> ActorC: Tries to flee
+    ActorC -> ActorB: Captures robber
+    ActorC -> ActorA: Gets valuables back
+    deactivate ActorC
+    ActorB -> Jail: The end
+```
