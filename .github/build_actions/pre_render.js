@@ -29,14 +29,14 @@ const renderFileAndRemoveMermaidScript = function (filename) {
     pretendToBeVisual: true,
     resources: "usable",
     runScripts: "dangerously",
-    //url: resolvedPath,
-    documentRoot: `file://o:/Git/swedbank-pay-design-guide-jekyll-theme/_site`
+    documentRoot: `file://` + resolvedPath
   };
 
   JSDOM.fromFile(`${filename}`, options).then(dom => {
-
-    let result = dom.serialize();
-    fs.writeFileSync(filename, result);
+    setImmediate(() => {
+      let result = dom.serialize();
+      fs.writeFileSync(filename, result);
+    });
   });
 }
 
