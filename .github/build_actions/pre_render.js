@@ -22,15 +22,19 @@ const getAllFiles = function (dirPath, arrayOfFiles) {
 }
 
 const renderFileAndRemoveMermaidScript = function (filename) {
+  if (filename != "_site\\index.html")
+    return;
   const resolvedPath = path.resolve(siteFolder);
   const options = {
     pretendToBeVisual: true,
     resources: "usable",
     runScripts: "dangerously",
-    url: "file://" + resolvedPath
+    //url: resolvedPath,
+    documentRoot: `file://o:/Git/swedbank-pay-design-guide-jekyll-theme/_site`
   };
 
   JSDOM.fromFile(`${filename}`, options).then(dom => {
+
     let result = dom.serialize();
     fs.writeFileSync(filename, result);
   });
